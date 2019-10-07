@@ -1,0 +1,44 @@
+version: '3.7'
+
+services:
+  db:
+    image: mariadb:10.4
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${COINSENCE_DB}
+      MYSQL_USER: ${COINSENCE_DB_USER}
+      MYSQL_PASSWORD: ${COINSENCE_DB_PASSWORD}
+    expose:
+      - "3306"
+    volumes:
+      - data:/var/lib/mysql
+  app:
+    build: .
+    restart: always
+    volumes:
+      - ./humhub:/var/www/html
+      - ./modules:/var/www/modules
+    ports:
+      - 8000:80
+    depends_on:
+      - db
+  composer:
+    image: composer:1.8.5
+    restart: "no"
+    command: install --ignore-platform-reqs --no-scripts
+    volumes:
+      - ./humhub:/app
+  pma:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - '8080:80'
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+    depends_on:
+      - db
+volumes:
+  data: {}
