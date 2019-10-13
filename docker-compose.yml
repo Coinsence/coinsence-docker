@@ -20,25 +20,41 @@ services:
     volumes:
       - ./humhub:/var/www/html
       - ./modules:/var/www/modules
-    ports:
-      - 8000:80
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.app.rule=Host(`coinsence.localhost`)
+      - traefik.http.routers.app.entrypoints=web
     depends_on:
       - db
-  composer:
-    image: composer:1.8.5
-    restart: "no"
-    command: install --ignore-platform-reqs --no-scripts
-    volumes:
-      - ./humhub:/app
   pma:
     image: phpmyadmin/phpmyadmin
     restart: always
-    ports:
-      - '8080:80'
     environment:
       PMA_HOST: db
       MYSQL_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.pma.rule=Host(`pma.coinsence.localhost`)
+      - traefik.http.routers.pma.entrypoints=web
     depends_on:
       - db
+  traefik:
+    container_name: "traefik"
+    image: traefik:v2.0
+    restart: always
+    command:
+      - "--log.level=INFO"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - 80:80
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.traefik.rule=Host(`monitor.coinsence.localhost`)
+      - traefik.http.routers.traefik.entrypoints=web
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
 volumes:
   data: {}

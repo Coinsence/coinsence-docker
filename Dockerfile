@@ -29,3 +29,16 @@ RUN set -xe && \
         gd && \
     printf "\n" | pecl install APCu && \
     docker-php-ext-enable apcu.so
+
+# Install Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+## clone humhub
+#RUN git clone https://github.com/Coinsence/humhub
+#
+
+COPY docker-coinsence-entrypoint.sh /docker-coinsence-entrypoint.sh
+
+RUN chmod +x /docker-coinsence-entrypoint.sh
+
+CMD /docker-coinsence-entrypoint.sh
