@@ -9,6 +9,7 @@ A Coinsence docker implementation
 - `Dockerfile`: used mainly to build a custom php-apache image
 - `humhub`: folder that will contain the humhub repo files
 - `modules`: you can put humhub modules there, this folder will be mounted on `/var/www/modules` in the container image, please consider adding that to the config file ([link](http://docs.humhub.org/dev-environment.html#external-modules-directory))
+- `data`: this folder will be mounted as `/var/lib/mysql` to persist database
 
 ## Perquisites:
 

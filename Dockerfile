@@ -11,6 +11,7 @@ RUN set -xe && \
         libicu-dev \
         libldap-dev \
         imagemagick \
+        git \
         unzip && \
     docker-php-ext-install -j$(nproc) \
         curl \

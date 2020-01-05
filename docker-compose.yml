@@ -13,7 +13,7 @@ services:
     expose:
       - "3306"
     volumes:
-      - data:/var/lib/mysql
+      - ./data:/var/lib/mysql
   app:
     build: .
     restart: always
@@ -56,5 +56,3 @@ services:
       - traefik.http.routers.traefik.entrypoints=web
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-volumes:
-  data: {}
