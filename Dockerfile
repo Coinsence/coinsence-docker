@@ -8,6 +8,7 @@ RUN set -xe && \
         libpng-dev \
         libcurl4-openssl-dev \
         libzip-dev \
+        libbz2-dev \
         libicu-dev \
         libldap-dev \
         imagemagick \
@@ -18,6 +19,7 @@ RUN set -xe && \
         mbstring \
         pdo_mysql \
         zip \
+        bz2 \
         exif \
         intl \
         fileinfo \
