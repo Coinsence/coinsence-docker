@@ -32,6 +32,8 @@ RUN set -xe && \
         gd && \
     printf "\n" | pecl install APCu && \
     docker-php-ext-enable apcu.so && \
+    printf "\n" | pecl install xdebug && \
+    docker-php-ext-enable xdebug && \
 
     chmod 666 /usr/local/etc/php/conf.d/*
 
