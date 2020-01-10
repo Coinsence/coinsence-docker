@@ -57,3 +57,10 @@ services:
       - traefik.http.routers.traefik.entrypoints=web
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
+  phantomjs:
+    image: wernight/phantomjs
+    container_name: phantomjs
+    restart: always
+    ports:
+      - "8910:8910"
+    command: "phantomjs --webdriver=8910 --ignore-ssl-errors=true --ssl-protocol=any"
