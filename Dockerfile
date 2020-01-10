@@ -31,7 +31,9 @@ RUN set -xe && \
     docker-php-ext-install -j$(nproc) \
         gd && \
     printf "\n" | pecl install APCu && \
-    docker-php-ext-enable apcu.so
+    docker-php-ext-enable apcu.so && \
+
+    chmod 666 /usr/local/etc/php/conf.d/*
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer

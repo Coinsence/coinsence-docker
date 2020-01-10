@@ -18,6 +18,7 @@ services:
     build: .
     restart: always
     volumes:
+      - ./config/php:/usr/local/etc/php/conf.d
       - ./humhub:/var/www/html
       - ./modules:/var/www/modules
     labels:
